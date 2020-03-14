@@ -13,6 +13,7 @@
     <TextCard title="山梨県" link="https://stopcovid19.yamanashi.dev/" />
     <TextCard title="岐阜県" link="https://covid19-gifu.netlify.com/" />
     <TextCard title="三重県" link="https://covid19-mie.netlify.com/" />
+    <TextCard title="愛媛県" link="https://ehime-covid19.com/" />
   </div>
 </template>
 
