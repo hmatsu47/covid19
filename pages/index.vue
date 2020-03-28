@@ -11,6 +11,11 @@
       :date="newsItem.date"
       :url="newsItem.url"
     />
+    <whats-new
+      class="mb-4"
+      text="当サイトは有志が作成したものです。お問い合わせは愛知県ではなく、当サイト運営まで。"
+      url="/about"
+    />
     <!-- <static-info
       class="mb-4"
       :url="'/flow'"
@@ -34,7 +39,7 @@
           :title-id="'number-of-confirmed-cases'"
           :chart-id="'time-bar-chart-patients'"
           :chart-data="patientsGraph"
-          :date="Data.patients.date"
+          :date="Data.patients_summary.date"
           :unit="'人'"
           :url="
             'https://www.pref.aichi.jp/site/covid19-aichi/kansensya-kensa.html'
@@ -55,19 +60,21 @@
           "
         />
       </v-col>
-      <!--
       <v-col cols="12" md="6" class="DataCard">
-        <time-stacked-bar-chart
+        <time-bar-chart
           title="検査実施数"
-          :title-id="'number-of-tested'"
-          :chart-id="'time-stacked-bar-chart-inspections'"
+          :title-id="'number-of-inspections'"
+          :chart-id="'time-bar-chart-inspections'"
           :chart-data="inspectionsGraph"
-          :date="Data.inspections_summary.date"
-          :items="inspectionsItems"
-          :labels="inspectionsLabels"
+          :date="DataInspections.inspections_summary.date"
           :unit="'件'"
+          :remarks="'※3/1は1/30からの合算値、3/8は3/2からの合算値'"
+          :url="
+            'https://www.pref.aichi.jp/site/covid19-aichi/kansensya-kensa.html'
+          "
         />
       </v-col>
+      <!--
       <v-col cols="12" md="6" class="DataCard">
         <time-bar-chart
           title="新型コロナコールセンター相談件数"
@@ -113,12 +120,13 @@ import TimeBarChart from '@/components/TimeBarChart.vue'
 import WhatsNew from '@/components/WhatsNew.vue'
 // import StaticInfo from '@/components/StaticInfo.vue'
 import Data from '@/data/data.json'
+import DataInspections from '@/data/data_inspections.json'
 // import MetroData from '@/data/metro.json'
 import DataTable from '@/components/DataTable.vue'
 import formatGraph from '@/utils/formatGraph'
 import formatTable from '@/utils/formatTable'
 import formatConfirmedCases from '@/utils/formatConfirmedCases'
-import News from '@/data/news.json'
+// import News from '@/data/news.json'
 import SvgCard from '@/components/SvgCard.vue'
 import ConfirmedCasesTable from '@/components/ConfirmedCasesTable.vue'
 
@@ -139,6 +147,10 @@ export default {
     const patientsGraph = formatGraph(Data.patients_summary.data)
     // 感染者数
     const patientsTable = formatTable(Data.patients.data)
+
+    const inspectionsGraph = formatGraph(
+      DataInspections.inspections_summary.data
+    )
     // 退院者グラフ
     // const dischargesGraph = formatGraph(Data.discharges_summary.data)
 
@@ -174,10 +186,20 @@ export default {
       unit: '人'
     }
 
+    const sumInfoOfInspections = {
+      lText: inspectionsGraph[
+        inspectionsGraph.length - 1
+      ].cumulative.toLocaleString(),
+      sText: inspectionsGraph[inspectionsGraph.length - 1].label + 'の累計',
+      unit: '件'
+    }
+
     const data = {
       Data,
+      DataInspections,
       patientsTable,
       patientsGraph,
+      inspectionsGraph,
       // dischargesGraph,
       // contactsGraph,
       // querentsGraph,
@@ -187,6 +209,7 @@ export default {
       // inspectionsLabels,
       confirmedCases,
       sumInfoOfPatients,
+      sumInfoOfInspections,
       headerItem: {
         icon: 'mdi-chart-timeline-variant',
         title: '愛知県内の最新感染動向',
