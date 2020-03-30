@@ -28,6 +28,9 @@
           title="検査陽性者の状況"
           :title-id="'details-of-confirmed-cases'"
           :date="headerItem.date"
+          :url="
+            'https://www.pref.aichi.jp/site/covid19-aichi/kansensya-kensa.html'
+          "
         >
           <confirmed-cases-table v-bind="confirmedCases" />
         </svg-card>
