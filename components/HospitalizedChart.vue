@@ -70,7 +70,8 @@ export default class HospitalizedChart extends Vue {
   public dailyData?: MainSummaryDataType[]
 
   private remarks = [
-    '「入院患者数」とは、愛知県が発表した「検査陽性者の状況」のうち、「入院等」の人数です。',
+    '「入院患者数」とは、愛知県が発表した「検査陽性者の状況」のうち、「入院」の人数です',
+    '7/27以前の「入院患者数」には、「入院調整」「自宅療養」「調整」が含まれています',
     '愛知県が発表した「検査陽性者の状況」を当サイトで記録・時系列化したものであり、実際の数値とは異なる可能性があります',
     '感染症発生状況が取得できなかった日の値は表示していません',
     '過去7日間の平均は、入院患者数の後方7日移動平均値です'
@@ -150,6 +151,17 @@ export default class HospitalizedChart extends Vue {
   public static makeAverageHospitals = (
     data: MainSummaryDataType[]
   ): Enumerable.IEnumerable<HospitalizedAverageType> => {
+    const toNum = (x: number | string): number | null => {
+      if (x == null) {
+        return null
+      }
+      if (x === '') {
+        return null
+      }
+
+      return Number(x)
+    }
+
     const source = Enumerable.from(data).reverse()
     const startDate = dayjs('2020-03-31')
     return source
@@ -160,13 +172,15 @@ export default class HospitalizedChart extends Vue {
         const ave =
           startDate <= dayjs(first['更新日時']) && d.count() === 7
             ? d
-                .where(d => d['入院中'] !== undefined)
-                .average(d => Number(d['入院中']))
+                .where(
+                  d => d['入院'] !== undefined || d['入院中'] !== undefined
+                )
+                .average(d => toNum(d['入院']) ?? toNum(d['入院中']) ?? 0)
             : undefined
 
         return {
           date: dayjs(dayjs(first['更新日時']).format('YYYY-MM-DD')), // 時刻を切り落とす
-          count: first['入院中'],
+          count: toNum(first['入院']) ?? toNum(first['入院中']) ?? 0,
           average: ave
         }
       })

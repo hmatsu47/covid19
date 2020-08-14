@@ -66,6 +66,10 @@ export type MainSummaryDataType = {
   重症: number
   転院: number
   施設入所: number
+  入院: number
+  入院調整: number
+  自宅療養: number
+  調整: number
   死亡: number
   退院: number
 }

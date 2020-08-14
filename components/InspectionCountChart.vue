@@ -84,12 +84,12 @@ export default class InspectionCountChart extends Vue {
     '民間施設等の検査件数及び陽性者数を含んでいます（発表時点での把握数）'
   ]
 
-  private readonly showSelector = true
-  private dataKind: DataKind = 'weekly-transition'
+  private readonly showSelector = false
+  private dataKind: DataKind = 'daily-transition'
   private readonly dataKinds = [
-    { key: 'weekly-transition', label: '週別' } as SelectorItem,
-    { key: 'daily-transition', label: '日別' } as SelectorItem,
-    { key: 'daily-cumulative', label: '累計' } as SelectorItem
+    // { key: 'weekly-transition', label: '週別' } as SelectorItem,
+    { key: 'daily-transition', label: '日別' } as SelectorItem
+    // { key: 'daily-cumulative', label: '累計' } as SelectorItem
   ]
 
   private readonly chartDataSet = new Map<DataKind, GraphData>()

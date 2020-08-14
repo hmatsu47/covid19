@@ -74,7 +74,7 @@ export default class NewPatientsChart extends Vue {
   public weeklyData?: PatientsSummaryWeekly[]
 
   private readonly remarks = [
-    '「新規感染者数」とは、愛知県が発表する「<a class=RemarksLink target=_blank href=https://www.pref.aichi.jp/site/covid19-aichi/kansensya-kensa.html>愛知県内発生事例</a>」を日別または週別に集計した人数です。(参考:<a class=RemarksLink target=_blank href=https://github.com/code4nagoya/covid19/blob/development/data/patients.csv>当サイトでCSV形式に加工したデータ</a>)。',
+    '「新規感染者数」とは、<a class=RemarksLink target=_blank href=https://www.pref.aichi.jp/site/covid19-aichi/>愛知県</a>、<a class=RemarksLink target=_blank href=http://www.city.nagoya.jp/kenkofukushi/page/0000126920.html>名古屋市</a>、<a class=RemarksLink target=_blank href=https://www.city.toyota.aichi.jp/kurashi/kenkou/eisei/1039225.html>豊田市</a>、<a class=RemarksLink target=_blank href=https://www.city.okazaki.lg.jp/houdou/index.html>岡崎市</a>、<a class=RemarksLink target=_blank href=https://www.city.toyohashi.lg.jp/41805.htm>豊橋市</a>が発表する感染者情報を日別または週別に集計した人数です。',
     '過去7日間の平均は、新規感染者数の後方7日移動平均値です'
   ]
 
@@ -89,9 +89,7 @@ export default class NewPatientsChart extends Vue {
   private readonly chartDataSet = new Map<DataKind, GraphData>()
 
   private get displayTitle(): string {
-    return `${
-      this.dataKind === 'daily-cumulative' ? '累計' : '新規'
-    }感染者数${
+    return `${this.dataKind === 'daily-cumulative' ? '累計' : '新規'}感染者数${
       this.dataKind === 'weekly-transition' ? '(週別)' : ''
     }`
   }
