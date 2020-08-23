@@ -89,7 +89,10 @@
           :url="'https://www.pref.aichi.jp/site/covid19-aichi/'"
           :subtext="'（一部、県知事のTwitter）'"
           :title-date="confirmedCases['更新日時']"
-          :remarks="[confirmedCases['備考']]"
+          :remarks="[
+            confirmedCases['備考'],
+            '「現在陽性者数」とは、愛知県が発表した「検査陽性者の状況」のうち、「入院」「入院調整」「施設入所」「自宅療養」「調整」を足した人数です。'
+          ]"
         >
           <confirmed-cases-table v-bind="confirmedCases" />
         </svg-card>
